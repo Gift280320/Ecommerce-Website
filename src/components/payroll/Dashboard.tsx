@@ -1,10 +1,13 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, DollarSign, Calendar, TrendingUp, FileText } from "lucide-react";
 import { useEmployeeStore } from "@/stores/employeeStore";
 import { usePayrollStore } from "@/stores/payrollStore";
 
-export const Dashboard = () => {
+interface DashboardProps {
+  onNavigate?: (section: string) => void;
+}
+
+export const Dashboard = ({ onNavigate }: DashboardProps = {}) => {
   const { employees } = useEmployeeStore();
   const { payrolls } = usePayrollStore();
 
@@ -45,6 +48,16 @@ export const Dashboard = () => {
       bgColor: "bg-orange-50",
     },
   ];
+
+  const handleQuickAction = (action: string) => {
+    console.log(`Quick action clicked: ${action}`);
+    if (onNavigate) {
+      onNavigate(action);
+    } else {
+      // Fallback: dispatch custom event that the parent can listen to
+      window.dispatchEvent(new CustomEvent('quickAction', { detail: action }));
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -105,7 +118,10 @@ export const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+              <div 
+                className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => handleQuickAction('employees')}
+              >
                 <div className="flex items-center gap-3">
                   <Users className="h-5 w-5 text-blue-600" />
                   <div>
@@ -114,7 +130,10 @@ export const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+              <div 
+                className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => handleQuickAction('payroll')}
+              >
                 <div className="flex items-center gap-3">
                   <DollarSign className="h-5 w-5 text-green-600" />
                   <div>
@@ -123,7 +142,10 @@ export const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+              <div 
+                className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                onClick={() => handleQuickAction('reports')}
+              >
                 <div className="flex items-center gap-3">
                   <FileText className="h-5 w-5 text-purple-600" />
                   <div>

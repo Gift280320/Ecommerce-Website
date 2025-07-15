@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dashboard } from "@/components/payroll/Dashboard";
 import { EmployeeManagement } from "@/components/payroll/EmployeeManagement";
@@ -18,10 +17,15 @@ const navigationItems = [
 const Index = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
 
+  const handleNavigation = (section: string) => {
+    console.log(`Navigating to: ${section}`);
+    setActiveTab(section);
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
-        return <Dashboard />;
+        return <Dashboard onNavigate={handleNavigation} />;
       case "employees":
         return <EmployeeManagement />;
       case "payroll":
@@ -29,7 +33,7 @@ const Index = () => {
       case "reports":
         return <Reports />;
       default:
-        return <Dashboard />;
+        return <Dashboard onNavigate={handleNavigation} />;
     }
   };
 
