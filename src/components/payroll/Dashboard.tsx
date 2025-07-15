@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, DollarSign, Calendar, TrendingUp } from "lucide-react";
+import { Users, DollarSign, Calendar, TrendingUp, FileText } from "lucide-react";
 import { useEmployeeStore } from "@/stores/employeeStore";
 import { usePayrollStore } from "@/stores/payrollStore";
 
