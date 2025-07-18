@@ -1,9 +1,30 @@
 
+import { useState } from "react";
 import { Header } from "@/components/ecommerce/Header";
 import { Hero } from "@/components/ecommerce/Hero";
 import { FeaturedProducts } from "@/components/ecommerce/FeaturedProducts";
+import { useToast } from "@/hooks/use-toast";
 
 export const EcommerceHome = () => {
+  const [email, setEmail] = useState("");
+  const { toast } = useToast();
+  
+  const handleSubscribe = () => {
+    if (email) {
+      toast({
+        title: "Subscription Successful!",
+        description: "Thank you for subscribing to our newsletter.",
+      });
+      setEmail("");
+    } else {
+      toast({
+        title: "Please enter your email",
+        description: "Email is required for subscription.",
+        variant: "destructive",
+      });
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -21,9 +42,14 @@ export const EcommerceHome = () => {
             <input
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            <button 
+              onClick={handleSubscribe}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
               Subscribe
             </button>
           </div>
@@ -35,7 +61,7 @@ export const EcommerceHome = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">ShopKenya</h3>
+              <h3 className="text-lg font-semibold mb-4">E-Commerce Website System</h3>
               <p className="text-gray-400">
                 Your trusted online marketplace for quality products with M-PESA payments.
               </p>
@@ -68,7 +94,7 @@ export const EcommerceHome = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 ShopKenya. All rights reserved.</p>
+            <p>&copy; 2024 E-Commerce Website System. All rights reserved.</p>
           </div>
         </div>
       </footer>
